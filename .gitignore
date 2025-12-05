@@ -26,6 +26,11 @@ project.fragment.lock.json
 *.dylib
 *.so
 
+# SQLite database files
+*.db
+*.db-shm
+*.db-wal
+
 # Logs
 *.log
 
