@@ -1,0 +1,36 @@
+# Build folders
+bin/
+obj/
+out/
+
+# VS Code settings
+.vscode/
+
+# Visual Studio settings
+*.suo
+*.user
+*.userprefs
+*.vs/
+
+# Rider IDE
+.idea/
+
+# NuGet packages
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+# SQLite native libraries (platform-specific)
+*.dll
+*.dylib
+*.so
+
+# Logs
+*.log
+
+# Mac system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
