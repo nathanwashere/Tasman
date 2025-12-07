@@ -31,6 +31,8 @@ project.fragment.lock.json
 *.db-shm
 *.db-wal
 
+!tasman.db
+
 # Logs
 *.log
 
