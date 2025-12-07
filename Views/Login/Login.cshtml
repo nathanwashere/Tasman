@@ -1,0 +1,25 @@
+@model Tasman.ViewModels.LoginViewModel
+
+<form asp-action="Login" asp-controller="Login" method="post">
+
+    <div>
+        <label asp-for="Email">Email:</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Password">Password:</label>
+        <input asp-for="Password" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Login</button>
+</form>
+
+<p>Don't have an account? 
+    <a asp-controller="Register" asp-action="Register">Register here</a>
+</p>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -30,7 +30,7 @@ namespace Tasman.Controllers
                 // Category (case-insensitive)
                 if (!string.IsNullOrEmpty(category))
                 {
-                    query = query.Where(t => t.Category.ToLower() == category.ToLower());
+                    query = query.Where(t => t.PackageType.ToLower() == category.ToLower());
                 }
 
                 // Max price

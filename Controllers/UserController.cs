@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Tasman.Data;
 using Tasman.Models;
+using Tasman.ViewModels;
 
 namespace Tasman.Controllers
 {
+    [Route("User")]
     public class UserController : Controller
     {
         // For database access
@@ -17,25 +20,6 @@ namespace Tasman.Controllers
         public ActionResult Index()
         {
             return View();
-        }
-        [HttpPost]
-        public ActionResult Create(User _user)
-        {
-            if (ModelState.IsValid)
-            {
-                if(_context.Users.Any(u => u.Email == _user.Email))
-                {
-                    ModelState.AddModelError("Email", "Email already exists");
-                    return View("/Views/Register/Register.cshtml", _user);
-                }
-                _context.Users.Add(_user);
-                _context.SaveChanges();
-
-                return RedirectToAction("Index","Travel");
-            }
-            
-            return View("/Views/Register/Register.cshtml", _user);
-            
         }
     }
 }
