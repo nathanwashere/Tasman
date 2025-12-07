@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyApp.Namespace
+namespace Tasman.Controllers
 {
     public class LoginController : Controller
     {

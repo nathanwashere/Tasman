@@ -1,11 +1,24 @@
+using System;
+
 namespace Tasman.Models
 {
     public class Travel
     {
-        public int Id { get; set; } 
-        public string Destination { get; set; }
-        public string Category { get; set; }
+        public int Id { get; set; }  // Primary key
+
+        public string Destination { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
+
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+
         public int Price { get; set; }
-        public string ImageUrl { get; set; } 
+        public int AvailableRooms { get; set; }
+
+        public string PackageType { get; set; } = string.Empty;  // family, honeymoon, etc.
+        public string AgeLimitation { get; set; } = string.Empty; // "18+", "All ages"
+        public string Description { get; set; } = string.Empty;
+
+        public string ImageUrl { get; set; } = string.Empty;  // Single image
     }
 }

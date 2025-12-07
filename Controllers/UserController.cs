@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Tasman.Models;
 
-namespace MyApp.Namespace
+namespace Tasman.Controllers
 {
     public class UserController : Controller
     {
@@ -13,7 +13,8 @@ namespace MyApp.Namespace
         [HttpPost]
         public ActionResult Create(User _user)
         {
-            return View();
+            
+            return RedirectToAction("Index","Travel");
         }
     }
 }
