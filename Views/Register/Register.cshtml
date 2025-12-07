@@ -1,16 +1,45 @@
-<form method="post" action="/User/Create">
-<label for="FirstName">First Name</label>
-<input type="text" id="FirstName" name="FirstName"/>
+@model Tasman.Models.User
 
-<label for="LastName">Last Name</label>
-<input type="text" id="LastName" name="LastName"/>
+<form asp-action="Create" asp-controller="User" method="post">
+    <div>
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
 
-<label for="Email">Email</label>
-<input type="email" id="Email" name="Email"/>
+    <div>
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
 
-<label for="Password">Password</label>
-<input type="password" id="Password" name="Password"/>
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
 
-<button type="submit">Register</button>
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
 
+        @* Optional message if other fields have validation errors *@
+        @if (!ViewData.ModelState.IsValid && Model.Password != null)
+        {
+            <small class="text-muted">Please re-enter your password</small>
+        }
+    </div>
+
+    <div>
+        <label asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Register</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
