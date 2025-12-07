@@ -54,4 +54,3 @@ dotnet aspnet-codegenerator controller -name MyController -outDir Controllers
 * Only works if **.NET 8 SDK** is installed.
 * Generates **controller only**, no views or models.
 
-test test,test test

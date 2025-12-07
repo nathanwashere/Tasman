@@ -2,8 +2,16 @@
     margin: 0;
     padding: 0;
 }
+.main {
+    width: 100%;
+    min-height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #fff; 
+}
 .page-container {
-    width: 90vw;
+    width: 90%;
     margin: 5vw auto;
 }
 
@@ -13,7 +21,7 @@
     margin-bottom: 4vw;
 }
 
-/* Swiper cards */
+
 .travel-card {
     background: #fff;
     padding: 2vw;
@@ -44,4 +52,48 @@
     font-size: 2.5vw;
     color: #009944;
     font-weight: bold;
+}
+.Header {
+    width: 100%;
+    display: flex;
+    gap: 2vw;
+    flex-direction: row;
+    align-items: center;
+  
+}
+
+/* Search Bar */
+.search-container input {
+    padding: 1vw 2vw;
+    border: 0.1vw solid #ccc;
+    border-radius: 1vw;
+    font-size: 1.2vw;
+    width: 18vw;
+}
+
+/* Filter Dropdown */
+.filter-container select {
+    padding: 1vw 2vw;
+    border: 0.1vw solid #ccc;
+    border-radius: 1vw;
+    font-size: 1.2vw;
+    background-color: white;
+    width: 20vw;
+}
+
+/* Price Range */
+.price-range-container {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    font-size: 1.2vw;
+}
+
+#price-range {
+    width: 12vw;
+}
+
+#range-value {
+    font-weight: bold;
+    font-size: 1.2vw;
 }

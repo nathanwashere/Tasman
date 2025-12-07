@@ -6,44 +6,126 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="stylesheet" href="~/css/travel.css" />
 
-<div class="page-container">
+<div class="main">
 
-    <h1 class="page-title">Explore Travel Destinations</h1>
+    <div class="page-container">
 
-    <!-- Swiper -->
-    <div class="swiper main-swiper">
-        <div class="swiper-wrapper">
+        <!-- ================= HEADER FILTER AREA ================= -->
+        <div class="Header">
 
-            @foreach (var t in Model)
-            {
-                <div class="swiper-slide travel-card">
-                    <div class="travel-image" 
-                        style="background-image:url('@t.ImageUrl');
-                                background-size:contain;
-                                background-position:center;
-                                background-repeat:no-repeat;">
-                    </div>
+            <!-- Search -->
+            <div class="search-container">
+                <input type="text"
+                       id="search"
+                       placeholder="Search destinations..."
+                       value="@ViewBag.Search" />
+            </div>
 
-                    <p class="travel-category">@t.Category</p>
-                    <p class="travel-price">₪@t.Price</p>
-                </div>
+            <!-- Category Filter -->
+            <div class="filter-container">
+                <select id="category">
 
-            }
+                    <option value="" selected="@(ViewBag.Category == null)">
+                        All Categories
+                    </option>
+
+                    <option value="luxury" selected="@(ViewBag.Category == "luxury")">
+                        Luxury
+                    </option>
+
+                    <option value="honeymoon" selected="@(ViewBag.Category == "honeymoon")">
+                        Honeymoon
+                    </option>
+
+                    <option value="family" selected="@(ViewBag.Category == "family")">
+                        Family
+                    </option>
+
+                    <option value="adventure" selected="@(ViewBag.Category == "adventure")">
+                        Adventure
+                    </option>
+
+                </select>
+            </div>
+
+            <!-- Sorting -->
+            <div class="filter-container">
+                <select id="sort">
+
+                    <option value="" selected="@(ViewBag.Sort == null)">
+                        Sort By...
+                    </option>
+
+                    <option value="price-asc" selected="@(ViewBag.Sort == "price-asc")">
+                        Price Low → High
+                    </option>
+
+                    <option value="price-desc" selected="@(ViewBag.Sort == "price-desc")">
+                        Price High → Low
+                    </option>
+
+                </select>
+            </div>
+
+            <!-- Price Range -->
+            <div class="price-range-container">
+                <label>Price Range:</label>
+
+                <input type="range"
+                       id="maxPrice"
+                       min="0"
+                       max="20000"
+                       step="500"
+                       value="@(ViewBag.MaxPrice ?? 0)" />
+
+                <span id="range-value">
+                    @(ViewBag.MaxPrice ?? 0)
+                </span>
+            </div>
 
         </div>
 
-        <div class="swiper-pagination"></div>
+        <!-- ================= TITLE ================= -->
+        <p class="page-title">Explore Travel Destinations</p>
+
+        <!-- ================= SWIPER ================= -->
+        <div class="swiper main-swiper">
+            <div class="swiper-wrapper">
+
+                @foreach (var t in Model)
+                {
+                    <div class="swiper-slide travel-card">
+
+                        <div class="travel-image"
+                             style="background-image:url('@t.ImageUrl');
+                                    background-size:contain;
+                                    background-position:center;
+                                    background-repeat:no-repeat;">
+                        </div>
+
+                        <p class="travel-category">@t.Category</p>
+                        <p class="travel-price">₪@t.Price</p>
+
+                    </div>
+                }
+
+            </div>
+
+            <div class="swiper-pagination"></div>
+        </div>
+
     </div>
 
 </div>
 
+<!-- ================= SWIPER SCRIPT ================= -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
     new Swiper(".main-swiper", {
         slidesPerView: 'auto',
         spaceBetween: 3,
-        centeredSlides: 'true',
+        centeredSlides: true,
         pagination: {
             el: ".swiper-pagination",
             clickable: true
@@ -53,5 +135,40 @@
             600: { slidesPerView: 2 },
             900: { slidesPerView: 3 }
         }
+    });
+</script>
+
+<!-- ================= PRICE DISPLAY ================= -->
+<script>
+    const priceSlider = document.getElementById("maxPrice");
+    const priceDisplay = document.getElementById("range-value");
+
+    priceSlider.addEventListener("input", () => {
+        priceDisplay.textContent = priceSlider.value;
+    });
+</script>
+
+<!-- ================= FILTER LOGIC ================= -->
+<script>
+    function applyFilters() {
+        const search = document.getElementById("search").value;
+        const category = document.getElementById("category").value;
+        const sort = document.getElementById("sort").value;
+        const maxPrice = document.getElementById("maxPrice").value;
+
+        const url =
+            `/Travel?search=${search}&category=${category}&sort=${sort}&maxPrice=${maxPrice}`;
+
+        window.location.href = url;
+    }
+
+    // Dropdown filters auto-apply
+    document.getElementById("category").addEventListener("change", applyFilters);
+    document.getElementById("sort").addEventListener("change", applyFilters);
+    document.getElementById("maxPrice").addEventListener("change", applyFilters);
+
+    // Search applies on Enter
+    document.getElementById("search").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") applyFilters();
     });
 </script>
