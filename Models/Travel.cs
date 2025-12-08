@@ -20,5 +20,9 @@ namespace Tasman.Models
         public string Description { get; set; } = string.Empty;
 
         public string ImageUrl { get; set; } = string.Empty;  // Single image
+
+        public string? GalleryImage1Url { get; set; } // for the gallery of each one 
+        public string? GalleryImage2Url { get; set; }
+        public string? GalleryImage3Url { get; set; }
     }
 }

@@ -10,7 +10,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
-
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    Tasman.Data.DbSeeder.Seed(db);
+}
 // Middleware
 if (!app.Environment.IsDevelopment())
 {

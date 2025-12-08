@@ -1,0 +1,110 @@
+@model Tasman.Models.Travel
+@{
+    Layout = "~/Views/Shared/TravelLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/travel-details.css" />
+
+<div class="details-container">
+
+    <!-- MAIN TITLE -->
+    <h1 class="details-title">@Model.Destination</h1>
+    <p class="details-subtitle">@Model.Country • @Model.PackageType</p>
+
+    <!-- HERO MAIN IMAGE -->
+    <div class="hero-image"
+         style="background-image:url('@Model.ImageUrl');">
+    </div>
+
+    <!-- GALLERY IMAGES -->
+    <div class="gallery">
+
+        @if (!string.IsNullOrEmpty(Model.GalleryImage1Url))
+        {
+            <div class="gallery-image"
+                 style="background-image:url('@Model.GalleryImage1Url');"></div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.GalleryImage2Url))
+        {
+            <div class="gallery-image"
+                 style="background-image:url('@Model.GalleryImage2Url');"></div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.GalleryImage3Url))
+        {
+            <div class="gallery-image"
+                 style="background-image:url('@Model.GalleryImage3Url');"></div>
+        }
+
+    </div>
+
+    <!-- DETAILS CARD -->
+    <div class="details-card">
+        <div class="details-row">
+
+            <div class="details-item">
+                <p class="details-label">Start Date:</p>
+                <p class="details-value">@Model.StartDate.ToString("dd/MM/yyyy")</p>
+            </div>
+
+            <div class="details-item">
+                <p class="details-label">End Date:</p>
+                <p class="details-value">@Model.EndDate.ToString("dd/MM/yyyy")</p>
+            </div>
+
+            <div class="details-item">
+                <p class="details-label">Price:</p>
+                <p class="details-value">₪@Model.Price</p>
+            </div>
+
+            <div class="details-item">
+                <p class="details-label">Available Rooms:</p>
+                <p class="details-value">@Model.AvailableRooms</p>
+            </div>
+
+            <div class="details-item">
+                <p class="details-label">Age Limitation:</p>
+                <p class="details-value">@Model.AgeLimitation</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div class="description-section">
+        <h2>Package Description</h2>
+        <p class="description-text">@Model.Description</p>
+    </div>
+
+    <!-- BOOKING BAR -->
+    <div class="booking-bar">
+        <div class="booking-price">₪@Model.Price</div>
+
+        <a href="/Travel/Book/@Model.Id" class="book-button">
+            Book This Trip
+        </a>
+    </div>
+
+    <!-- OPTIONAL SIMILAR TRAVEL -->
+    @* You can fill these from controller later *@
+    @if (ViewBag.SimilarTrips != null)
+    {
+        <h2 class="similar-title">Similar Destinations You May Like</h2>
+
+        <div class="similar-grid">
+            @foreach (var t in ViewBag.SimilarTrips)
+            {
+                <a href="/Travel/Details/@t.Id" class="similar-card">
+                    <div class="similar-image"
+                         style="background-image:url('@t.ImageUrl');"></div>
+
+                    <div class="similar-info">
+                        <p class="similar-title-text">@t.Destination</p>
+                        <p class="similar-price">₪@t.Price</p>
+                    </div>
+                </a>
+            }
+        </div>
+    }
+</div>

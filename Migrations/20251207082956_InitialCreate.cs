@@ -27,6 +27,7 @@ namespace Tasman.Migrations
                     AgeLimitation = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     ImageUrl = table.Column<string>(type: "TEXT", nullable: false)
+                    
                 },
                 constraints: table =>
                 {

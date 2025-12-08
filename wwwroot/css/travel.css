@@ -1,99 +1,384 @@
-*{
+/* COLOR PALETTE (Units adjusted to vw) */
+:root {
+    --color-primary-blue: #4a4e69; /* Deep Blue/Slate */
+    --color-primary-purple: #9a8c98; /* Muted Purple/Rose */
+    --color-accent-green: #40916c; /* Vibrant Green */
+    --color-background-light: #f8f9fa; /* Light Gray Background */
+    --color-text-dark: #2c363f; /* Dark Text */
+    --color-text-light: #ffffff; /* White Text */
+    --border-radius-base: 0.85vw; /* Converted from 12px */
+    --box-shadow-subtle: 0 0.28vw 0.85vw rgba(0, 0, 0, 0.08); /* Converted from 4px 12px */
+}
+
+/* RESET */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+/* MAIN LAYOUT */
 .main {
     width: 100%;
-    min-height: 100vh; 
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    background-color: #fff; 
+    background-color: var(--color-background-light); 
 }
+
 .page-container {
-    width: 90%;
-    margin: 5vw auto;
+    width: 90vw;
+    max-width: 1400px; /* Keeping a max-width for very large screens */
+    margin: 2.15vw auto; /* Converted from 3rem */
 }
 
-.page-title {
-    font-size: 3vw;
+/* INTRO TEXT */
+.main-heading {
+    font-size: 2vw; /* Converted from 2.8rem */
+    font-weight: 700;
+    color: var(--color-primary-blue);
     text-align: center;
-    margin-bottom: 4vw;
+    margin-bottom: 0.35vw; /* Converted from 0.5rem */
 }
 
+.sub-heading {
+    font-size: 0.95vw; /* Converted from 1.3rem */
+    color: var(--color-primary-purple);
+    text-align: center;
+    margin-bottom: 1.8vw; /* Converted from 2.5rem */
+}
+
+/* SECTION TITLES */
+.page-title {
+    font-size: 1.45vw; /* Converted from 2rem */
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin: 2.15vw 0 1.07vw 0; /* Converted from 3rem and 1.5rem */
+    padding-bottom: 0.35vw; /* Converted from 0.5rem */
+    position: relative;
+}
+
+.page-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 7.15vw; /* Converted from 100px */
+    height: 0.28vw; /* Converted from 4px */
+    background: var(--color-accent-green);
+    border-radius: 0.14vw;
+}
+
+.recommended-title::after {
+    background: linear-gradient(90deg, var(--color-primary-blue), var(--color-primary-purple));
+    width: 10.7vw; /* Converted from 150px */
+}
+
+/* HEADER FILTERS - ALIGNMENT FIXES */
+.Header {
+    width: 100%;
+    display: flex;
+    gap: 0.7vw; /* REVERTED TO STANDARD GAP */
+    flex-wrap: wrap;
+    align-items: center; /* ALIGN ENTIRE GROUPS TO THE CENTER */
+    justify-content: center;
+    
+    background: linear-gradient(135deg, var(--color-text-light) 0%, #f4f4f6 100%);
+    
+    padding: 1.07vw; 
+    border-radius: 1.07vw; 
+    box-shadow: 0 0.7vw 2.15vw rgba(74, 78, 105, 0.15); 
+    border: 0.07vw solid rgba(74, 78, 105, 0.05); 
+    margin-bottom: 1.43vw; 
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start;
+    justify-content: flex-start; /* Ensure all groups start from the top */
+    flex-shrink: 1;
+}
+
+/* INPUT & SELECT BASE STYLES */
+.search-container input,
+.filter-container select,
+#startDate {
+    padding: 0.57vw 0.85vw; 
+    border: 0.07vw solid #c9c9c9;
+    border-radius: 0.35vw; 
+    font-size: 0.7vw; 
+    transition: all 0.3s ease;
+    background-color: var(--color-text-light); 
+    color: var(--color-text-dark);
+    height: 2.15vw; /* FIXED HEIGHT FOR ALIGNMENT */
+    min-width: 7.15vw; 
+    font-weight: 500;
+}
+
+.search-container input:focus,
+.filter-container select:focus,
+#startDate:focus {
+    border-color: var(--color-accent-green); 
+    box-shadow: 0 0 0 0.21vw rgba(64, 145, 108, 0.3); 
+    outline: none;
+}
+
+.filter-group label {
+    font-size: 0.65vw; 
+    font-weight: 600;
+    color: var(--color-primary-blue); 
+    margin-bottom: 0.21vw; 
+}
+
+.filter-group label i {
+    color: var(--color-primary-purple); 
+    margin-right: 0.28vw; 
+}
+
+/* SEARCH BAR */
+.search-container {
+    position: relative;
+    width: 12.8vw; 
+    min-width: 10.7vw; 
+}
+
+.search-container input {
+    width: 100%;
+    padding-right: 2.15vw; 
+}
+
+.search-container::after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f002"; 
+    position: absolute;
+    right: 0.25vw; 
+    top: 50%; 
+    transform: translateY(-50%);
+    color: var(--color-primary-purple);
+    pointer-events: none;
+}
+
+/* CATEGORY + SORT */
+.filter-container {
+    min-width: 7.15vw; 
+}
+
+/* PRICE RANGE */
+.price-range-container {
+    gap: 0.35vw; 
+}
+
+.range-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.57vw; 
+    padding: 0.35vw 0; 
+    height: 2.15vw; 
+}
+
+/* Customizing the range thumb */
+#maxPrice::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0.85vw;
+    height: 0.85vw;
+    background: var(--color-primary-blue);
+    border: 0.21vw solid var(--color-text-light);
+    border-radius: 50%;
+    cursor: grab;
+    /* Box shadow for filling the track was removed. */
+}
+
+#range-value {
+    font-weight: 700;
+    font-size: 0.7vw; 
+    color: var(--color-accent-green);
+    min-width: 4.3vw; 
+    text-align: left;
+}
+
+/* DATE FILTER */
+.date-filter-container {
+    gap: 0.35vw; 
+}
+
+#startDate {
+    width: 7.15vw; 
+}
+
+/* TRAVEL CARDS - SWIPER */
+.main-swiper {
+    padding-bottom: 2.15vw; 
+}
+
+.swiper-slide {
+    width: 25vw; 
+    min-width: 20vw; 
+}
+
+/* ALL PACKAGES GRID */
+.travel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20vw, 1fr)); 
+    gap: 1.8vw; 
+    padding-bottom: 2.15vw; 
+}
 
 .travel-card {
-    background: #fff;
-    padding: 2vw;
-    border-radius: 2vw;
-    box-shadow: 0 0 2vw rgba(0,0,0,0.1);
+    background: var(--color-text-light);
+    border-radius: 1.07vw; 
+    box-shadow: 0 0.57vw 1.8vw rgba(0, 0, 0, 0.1); 
     text-align: center;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.travel-card:hover {
+    transform: translateY(-0.35vw); 
+    box-shadow: 0 0.85vw 2.15vw rgba(74, 78, 105, 0.2); 
+}
+
+.travel-image-wrapper {
+    position: relative;
+    height: 14.3vw; 
+    overflow: hidden;
+    border-bottom: 0.28vw solid var(--color-primary-purple); 
 }
 
 .travel-image {
     width: 100%;
-    height: 18vw;
-    background: #e3e3e3;
-    margin-bottom: 2vw;
-
-    font-size: 3vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100%;
+    background-size: cover !important; 
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    transition: transform 0.5s ease;
 }
 
-.travel-category {
-    font-size: 2vw;
-    color: #666;
-    margin-bottom: 1vw;
+.travel-card:hover .travel-image {
+    transform: scale(1.05);
+}
+
+.travel-PackageType {
+    position: absolute;
+    top: 0.7vw; 
+    left: 0.7vw; 
+    padding: 0.28vw 0.57vw; 
+    background-color: var(--color-primary-blue);
+    color: var(--color-text-light);
+    font-size: 0.64vw; 
+    font-weight: 600;
+    border-radius: 0.7vw; 
+    text-transform: capitalize;
+}
+
+.card-content {
+    padding: 1.07vw 0.7vw; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ✨ NEW STYLE: DESTINATION COUNTRY TITLE */
+.travel-country {
+    font-size: 1.1vw; /* Converted from approx 1.5rem */
+    font-weight: 700;
+    color: var(--color-primary-blue);
+    margin-bottom: 0.14vw; /* Small margin below the country */
+    text-transform: uppercase;
+    letter-spacing: 0.07vw; /* Converted from 1px */
+}
+
+/* Ensure existing titles are still visible */
+.travel-title {
+    font-size: 0.85vw; /* Converted from approx 1.2rem */
+    font-weight: 500;
+    color: var(--color-text-dark);
+    margin-bottom: 0.5vw;
+}
+/* IMPORTANT: You will need to wrap your existing card title in a class like .travel-title 
+   in your HTML to apply this style, as there was no explicit class before. */
+
+
+/* Dual Button Container */
+.card-actions {
+    display: flex;
+    gap: 0.7vw; 
+    margin-top: 0.35vw; 
 }
 
 .travel-price {
-    font-size: 2.5vw;
-    color: #009944;
-    font-weight: bold;
-}
-.Header {
-    width: 100%;
-    display: flex;
-    gap: 2vw;
-    flex-direction: row;
-    align-items: center;
-  
+    font-size: 1.28vw; 
+    color: var(--color-accent-green);
+    font-weight: 800;
+    margin-bottom: 0.35vw; 
 }
 
-/* Search Bar */
-.search-container input {
-    padding: 1vw 2vw;
-    border: 0.1vw solid #ccc;
-    border-radius: 1vw;
-    font-size: 1.2vw;
-    width: 18vw;
+/* BUTTON STYLES */
+.book-now-btn, .buy-now-btn {
+    display: inline-block;
+    padding: 0.57vw 1.07vw; 
+    color: var(--color-text-light);
+    text-decoration: none;
+    border-radius: 0.35vw; 
+    font-size: 0.7vw; 
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    border: none;
 }
 
-/* Filter Dropdown */
-.filter-container select {
-    padding: 1vw 2vw;
-    border: 0.1vw solid #ccc;
-    border-radius: 1vw;
-    font-size: 1.2vw;
-    background-color: white;
-    width: 20vw;
+.book-now-btn {
+    background-color: var(--color-accent-green);
 }
 
-/* Price Range */
-.price-range-container {
-    display: flex;
-    align-items: center;
-    gap: 1vw;
-    font-size: 1.2vw;
+.book-now-btn:hover {
+    background-color: #317a58;
+    transform: translateY(-0.07vw);
 }
 
-#price-range {
-    width: 12vw;
+.buy-now-btn {
+    background-color: var(--color-primary-blue);
 }
 
-#range-value {
-    font-weight: bold;
-    font-size: 1.2vw;
+.buy-now-btn:hover {
+    background-color: #35384e;
+    transform: translateY(-0.07vw);
 }
+
+/* SWIPER PAGINATION OVERRIDES (No Change) */
+.swiper-pagination-bullet {
+    background: var(--color-primary-purple) !important;
+    opacity: 0.6 !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: var(--color-primary-blue) !important;
+    opacity: 1 !important;
+    transform: scale(1.2);
+}
+
+/* CALENDAR OVERRIDES (Keeping your green accent for selection) */
+.flatpickr-calendar {
+    border-radius: 0.7vw !important; 
+    box-shadow: 0 0.35vw 1.8vw rgba(0, 0, 0, 0.2) !important; 
+    font-size: 0.7vw !important; 
+    border: none !important;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background: var(--color-accent-green) !important; 
+    border-color: var(--color-accent-green) !important;
+    color: white !important;
+}
+
+.flatpickr-day.today {
+    border-color: var(--color-primary-blue) !important;
+    color: var(--color-primary-blue) !important;
+}
+
