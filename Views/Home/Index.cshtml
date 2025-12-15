@@ -1,8 +1,69 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    Layout = "_AuthLayout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="landing-page">
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="eyebrow">Luxury escapes curated for you</p>
+            <h1>Discover the world's most exclusive vacations</h1>
+            <p class="subtitle">
+                From private island getaways to alpine retreats, Tasman unlocks the finest experiences
+                across the globe with concierge-level planning.
+            </p>
+            <div class="hero-buttons">
+                <a asp-controller="Login" asp-action="Index" class="btn-lux btn-solid">
+                    <span class="btn-icon">✈️</span> Sign In
+                </a>
+                <a asp-controller="Register" asp-action="Index" class="btn-lux btn-ghost">
+                    <span class="btn-icon">🌴</span> Create Account
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div>
+                    <span class="stat-value">120+</span>
+                    <span class="stat-label">Signature destinations</span>
+                </div>
+                <div>
+                    <span class="stat-value">24/7</span>
+                    <span class="stat-label">Concierge support</span>
+                </div>
+                <div>
+                    <span class="stat-value">5★</span>
+                    <span class="stat-label">Member reviews</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="destinations">
+        <h2>Featured escapes</h2>
+        <div class="destination-grid">
+            <article class="destination-card">
+                <div class="destination-image destination-bali"></div>
+                <div class="destination-body">
+                    <span class="destination-icon">🌺</span>
+                    <h3>Bali Sanctuary</h3>
+                    <p>Private villas suspended over the jungle canopy with bespoke spa rituals.</p>
+                </div>
+            </article>
+            <article class="destination-card">
+                <div class="destination-image destination-amalfi"></div>
+                <div class="destination-body">
+                    <span class="destination-icon">⛵</span>
+                    <h3>Amalfi Voyage</h3>
+                    <p>Chartered yachts, cliffside dining, and sun-drenched Mediterranean coastlines.</p>
+                </div>
+            </article>
+            <article class="destination-card">
+                <div class="destination-image destination-kyoto"></div>
+                <div class="destination-body">
+                    <span class="destination-icon">🗻</span>
+                    <h3>Kyoto Serenity</h3>
+                    <p>Immersive cultural retreats amidst temples, tea gardens, and artisan ateliers.</p>
+                </div>
+            </article>
+        </div>
+    </section>
 </div>

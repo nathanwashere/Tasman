@@ -5,7 +5,6 @@ using Tasman.Data;
 
 namespace Tasman.Controllers
 {
-    [Route("register")] // Base route for this controller
     public class RegisterController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -15,17 +14,17 @@ namespace Tasman.Controllers
             _context = context;
         }
 
-        // GET /register
-        [HttpGet("")] // Access via localhost/register
-        public IActionResult Register()
+        // GET /Register
+        [HttpGet]
+        public IActionResult Index()
         {
             // Pass empty model so validation messages work correctly
             return View(new User());
         }
 
-        // POST /register
-        [HttpPost("")] // Submit to localhost/register
-        public IActionResult Register(User model)
+        // POST /Register
+        [HttpPost]
+        public IActionResult Index(User model)
         {
             // 1. Validate the model
             if (!ModelState.IsValid)

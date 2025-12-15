@@ -11,7 +11,7 @@
             <p>Join us for amazing travel experiences</p>
         </div>
 
-        <form asp-action="Register" asp-controller="Register" method="post" class="auth-form">
+        <form asp-action="Index" asp-controller="Register" method="post" class="auth-form">
             <div class="form-row">
                 <div class="form-group">
                     <label asp-for="FirstName" class="form-label">First Name</label>
@@ -73,11 +73,12 @@
             </div>
 
             <button type="submit" class="btn-primary-auth">Create Account</button>
+            <a asp-controller="Home" asp-action="Index" class="btn-secondary-auth">← Back to Home</a>
         </form>
 
         <div class="auth-footer">
             <p>Already have an account? 
-                <a asp-controller="Login" asp-action="Login" class="auth-link">Sign in here</a>
+                <a asp-controller="Login" asp-action="Index" class="auth-link">Sign in here</a>
             </p>
         </div>
     </div>

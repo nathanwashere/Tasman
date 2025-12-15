@@ -6,7 +6,6 @@ using Tasman.Data;
 
 namespace Tasman.Controllers
 {
-    [Route("login")] // Base route for this controller
     public class LoginController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -15,14 +14,13 @@ namespace Tasman.Controllers
         {
             _context = context;
         }
-        [HttpGet("/")]
-        [HttpGet("")]
-        public IActionResult Login()
+        [HttpGet]
+        public IActionResult Index()
         {
             return View();
         }
-        [HttpPost("")]
-        public IActionResult Login(LoginViewModel model)
+        [HttpPost]
+        public IActionResult Index(LoginViewModel model)
         {
             // 1. Validate ViewModel
             if (!ModelState.IsValid)

@@ -189,6 +189,22 @@ body {
   color: #764ba2;
   text-decoration: underline;
 }
+.btn-secondary-auth {
+  display: inline-block;
+  text-align: center;
+  color: #667eea;
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 12px;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary-auth:hover {
+  border-color: #667eea;
+  color: #764ba2;
+}
 
 .text-danger {
   color: #e74c3c;
@@ -198,6 +214,200 @@ body {
   font-size: 12px;
   margin-top: 4px;
   display: block;
+}
+
+/* Landing Page */
+.landing-page {
+  min-height: 100vh;
+  background-color: #050816;
+  color: #f5f6fa;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.hero {
+  position: relative;
+  min-height: 70vh;
+  padding: 80px 20px;
+  background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.6);
+  backdrop-filter: blur(1px);
+}
+
+.hero-content {
+  position: relative;
+  max-width: 760px;
+  z-index: 1;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 14px;
+  color: #8fb7ff;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero .subtitle {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #d7e1ff;
+  margin-bottom: 35px;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.btn-lux {
+  border-radius: 30px;
+  padding: 14px 32px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-icon {
+  font-size: 1.3rem;
+}
+
+.btn-solid {
+  background: linear-gradient(120deg, #0ea5e9, #2563eb);
+  color: white;
+  box-shadow: 0 15px 40px rgba(37, 99, 235, 0.3);
+}
+
+.btn-ghost {
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: white;
+}
+
+.btn-lux:hover {
+  transform: translateY(-3px);
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 40px;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  display: block;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #c7d2fe;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.destinations {
+  padding: 80px 20px 100px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.destinations h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #e0e7ff;
+}
+
+.destination-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.destination-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 25px 50px rgba(5, 8, 22, 0.4);
+}
+
+.destination-image {
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+}
+
+.destination-bali {
+  background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80');
+}
+
+.destination-amalfi {
+  background-image: url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=800&q=80');
+}
+
+.destination-kyoto {
+  background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80');
+}
+
+.destination-body {
+  padding: 25px;
+}
+
+.destination-icon {
+  font-size: 1.8rem;
+}
+
+.destination-card h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #f8fafc;
+}
+
+.destination-card p {
+  color: #c7d2fe;
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    text-align: left;
+  }
+
+  .hero-content {
+    align-self: flex-start;
+  }
+
+  .hero-buttons {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
 }
 
 .form-row {

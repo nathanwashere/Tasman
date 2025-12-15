@@ -11,7 +11,7 @@
             <p>Sign in to your account</p>
         </div>
 
-        <form asp-action="Login" asp-controller="Login" method="post" class="auth-form">
+        <form asp-action="Index" asp-controller="Login" method="post" class="auth-form">
             <div class="form-group">
                 <label asp-for="Email" class="form-label">Email Address</label>
                 <div class="input-wrapper">
@@ -31,11 +31,12 @@
             </div>
 
             <button type="submit" class="btn-primary-auth">Sign In</button>
+            <a asp-controller="Home" asp-action="Index" class="btn-secondary-auth">← Back to Home</a>
         </form>
 
         <div class="auth-footer">
             <p>Don't have an account? 
-                <a asp-controller="Register" asp-action="Register" class="auth-link">Create one here</a>
+                <a asp-controller="Register" asp-action="Index" class="auth-link">Create one here</a>
             </p>
         </div>
     </div>
