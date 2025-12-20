@@ -1,0 +1,31 @@
+@model Tasman.Models.Travel
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    ViewData["Title"] = "Edit Destination";
+}
+
+<div class="admin-header">
+    <div>
+        <h1>Edit Destination</h1>
+        <p>Adjust timing, pricing, capacity, and imagery.</p>
+    </div>
+    <a href="/AdminTravel" class="pill">Back to list</a>
+</div>
+
+<div class="admin-form-card">
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="admin-form-grid">
+            <h3>Core Details</h3>
+            @Html.Partial("_TravelForm", Model)
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="pill primary">Save changes</button>
+            <a href="/AdminTravel" class="pill">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

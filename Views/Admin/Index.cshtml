@@ -1,0 +1,41 @@
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="admin-header">
+    <div>
+        <h1>Control Center</h1>
+        <p>Manage destinations, bookings, and your traveler community.</p>
+    </div>
+</div>
+
+<div class="admin-grid">
+    <div class="admin-card">
+        <p class="label">Destinations</p>
+        <h2>@ViewBag.TravelCount</h2>
+        <p class="muted">Live in catalog</p>
+    </div>
+    <div class="admin-card">
+        <p class="label">Users</p>
+        <h2>@ViewBag.UserCount</h2>
+        <p class="muted">Registered travelers</p>
+    </div>
+    <div class="admin-card">
+        <p class="label">Bookings</p>
+        <h2>@ViewBag.BookingsCount</h2>
+        <p class="muted">Confirmed stays</p>
+    </div>
+    <div class="admin-card">
+        <p class="label">Waitlist</p>
+        <h2>@ViewBag.WaitlistCount</h2>
+        <p class="muted">Awaiting spots</p>
+    </div>
+</div>
+
+<div class="quick-actions">
+    <a class="pill" href="/AdminTravel/Create">Add destination</a>
+    <a class="pill" href="/AdminTravel">Manage catalog</a>
+    <a class="pill" href="/AdminBookings">Bookings &amp; waitlist</a>
+    <a class="pill" href="/AdminUsers">User database</a>
+</div>

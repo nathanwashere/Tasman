@@ -9,7 +9,7 @@
 
     <!-- MAIN TITLE -->
     <h1 class="details-title">@Model.Destination</h1>
-    <p class="details-subtitle">@Model.Country • @Model.PackageType</p>
+    <p class="details-subtitle">@Model.Country · @Model.PackageType</p>
 
     <!-- HERO MAIN IMAGE -->
     <div class="hero-image"
@@ -55,7 +55,14 @@
 
             <div class="details-item">
                 <p class="details-label">Price:</p>
-                <p class="details-value">₪@Model.Price</p>
+                @if (Model.DiscountPrice.HasValue && Model.DiscountEndsAt.HasValue && Model.DiscountEndsAt.Value > DateTime.UtcNow)
+                {
+                    <p class="details-value"><span class="old-price">₪@Model.Price</span> ₪@Model.DiscountPrice</p>
+                }
+                else
+                {
+                    <p class="details-value">₪@Model.Price</p>
+                }
             </div>
 
             <div class="details-item">
@@ -79,7 +86,14 @@
 
     <!-- BOOKING BAR -->
     <div class="booking-bar">
-        <div class="booking-price">₪@Model.Price</div>
+        @if (Model.DiscountPrice.HasValue && Model.DiscountEndsAt.HasValue && Model.DiscountEndsAt.Value > DateTime.UtcNow)
+        {
+            <div class="booking-price"><span class="old-price">₪@Model.Price</span> ₪@Model.DiscountPrice</div>
+        }
+        else
+        {
+            <div class="booking-price">₪@Model.Price</div>
+        }
 
         <a href="/Travel/Book/@Model.Id" class="book-button">
             Book This Trip

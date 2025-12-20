@@ -1,0 +1,51 @@
+@model IEnumerable<Tasman.Models.Travel>
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    ViewData["Title"] = "Destinations";
+}
+
+<div class="admin-header">
+    <div>
+        <h1>Destinations</h1>
+        <p>On-brand cards with smooth motion for fast catalog edits.</p>
+    </div>
+    <a href="/AdminTravel/Create" class="pill primary">Add destination</a>
+    @if (TempData["Message"] != null)
+    {
+        <span class="pill" style="background:rgba(64,145,108,0.12);color:#40916c;">@TempData["Message"]</span>
+    }
+</div>
+
+<div class="admin-destination-grid">
+    @foreach (var t in Model)
+    {
+        <div class="admin-destination-card">
+            <div class="admin-dest-image" style="background-image:url('@t.ImageUrl');">
+                <span class="admin-dest-tag">@t.PackageType</span>
+                @if (t.IsRecommended) { <span class="admin-dest-chip">Recommended</span>; }
+                @if (!t.IsVisible) { <span class="admin-dest-chip muted">Hidden</span>; }
+            </div>
+            <div class="admin-dest-body">
+                <p class="admin-dest-country">@t.Country</p>
+                <p class="admin-dest-title">@t.Destination</p>
+                @if (t.DiscountPrice.HasValue && t.DiscountEndsAt.HasValue && t.DiscountEndsAt.Value > DateTime.UtcNow)
+                {
+                    <p class="admin-dest-price"><span class="old-price">₪@t.Price</span> ₪@t.DiscountPrice</p>
+                }
+                else
+                {
+                    <p class="admin-dest-price">₪@t.Price</p>
+                }
+                <p class="admin-dest-meta">Rooms: @t.AvailableRooms · @t.StartDate.ToString("dd MMM") - @t.EndDate.ToString("dd MMM")</p>
+                <p class="admin-dest-meta">Order: @t.DisplayOrder · Book window: @t.BookableDaysBeforeStart d</p>
+            </div>
+            <div class="admin-dest-actions">
+                <a href="/AdminTravel/Edit/@t.Id" class="pill primary">Edit</a>
+                <form asp-action="Delete" method="post" asp-route-id="@t.Id" style="margin:0;">
+                    <input type="hidden" name="id" value="@t.Id" />
+                    <button type="submit" class="pill danger" onclick="return confirm('Delete this destination?');">Delete</button>
+                </form>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,28 @@
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin - Tasman</title>
+    <link rel="stylesheet" href="~/css/admin.css" />
+</head>
+<body>
+    <div class="admin-shell">
+        <aside class="admin-nav">
+            <div class="brand">Tasman Admin</div>
+            <nav>
+                <a href="/Admin">Dashboard</a>
+                <a href="/AdminTravel">Destinations</a>
+                <a href="/AdminBookings">Bookings &amp; Waitlist</a>
+                <a href="/AdminUsers">Users</a>
+                <a href="/Travel">View Site</a>
+            </nav>
+        </aside>
+        <main class="admin-content">
+            @RenderBody()
+        </main>
+    </div>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

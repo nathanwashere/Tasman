@@ -4,6 +4,8 @@ namespace Tasman.Models
 {
     public class User
     {
+        public bool IsAdmin { get; set; }
+
         // Primary key
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email format")]

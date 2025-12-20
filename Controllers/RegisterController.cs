@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tasman.Models;
 using Microsoft.AspNetCore.Identity;
 using Tasman.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace Tasman.Controllers
 {
@@ -42,10 +43,14 @@ namespace Tasman.Controllers
             // 3. Hash password
             var hasher = new PasswordHasher<User>();
             model.Password = hasher.HashPassword(model, model.Password);
+            model.IsAdmin = false;
 
             // 4. Save user
             _context.Users.Add(model);
             _context.SaveChanges();
+
+            HttpContext.Session.SetString("UserEmail", model.Email);
+            HttpContext.Session.SetString("IsAdmin", "False");
 
             // 5. Redirect after success
             return RedirectToAction("Index", "Travel");

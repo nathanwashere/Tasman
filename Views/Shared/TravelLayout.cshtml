@@ -1,3 +1,4 @@
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +11,22 @@
 </head>
 
 <body>
+    <header class="travel-nav">
+        <div class="nav-inner">
+            <a href="/Travel" class="brand">Tasman</a>
+            <div class="nav-links">
+                <a href="/Travel">Destinations</a>
+                <a href="/Login">Sign in</a>
+                @{
+                    var isAdmin = HttpContextAccessor.HttpContext?.Session.GetString("IsAdmin");
+                    if (bool.TryParse(isAdmin, out var admin) && admin)
+                    {
+                        <a href="/Admin">Admin</a>
+                    }
+                }
+            </div>
+        </div>
+    </header>
     <main>
         @RenderBody()
     </main>

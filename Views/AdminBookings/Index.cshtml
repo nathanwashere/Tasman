@@ -1,0 +1,82 @@
+@model IEnumerable<Tasman.Models.Booking>
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    ViewData["Title"] = "Bookings & Waitlist";
+    var waitlist = ViewBag.Waitlist as IEnumerable<Tasman.Models.WaitlistEntry>;
+}
+
+<div class="admin-header">
+    <div>
+        <h1>Bookings &amp; Waitlist</h1>
+        <p>Oversee confirmed travelers, free up rooms, and promote waitlisted guests.</p>
+    </div>
+    @if (TempData["Message"] != null)
+    {
+        <span class="pill" style="background:rgba(64,145,108,0.12);color:#40916c;">@TempData["Message"]</span>
+    }
+</div>
+
+<div class="admin-card" style="padding:0;margin-bottom:20px;">
+    <div class="table-heading">Confirmed bookings</div>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Destination</th>
+                <th>User</th>
+                <th>Rooms</th>
+                <th>Created</th>
+                <th style="width:120px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var b in Model)
+            {
+                <tr>
+                    <td>@b.Travel?.Destination</td>
+                    <td>@b.UserEmail</td>
+                    <td>@b.Rooms</td>
+                    <td>@b.CreatedAt.ToLocalTime().ToString("dd MMM HH:mm")</td>
+                    <td>
+                        <form asp-action="Delete" method="post" asp-route-id="@b.Id" onsubmit="return confirm('Cancel this booking?');">
+                            <button type="submit" class="pill danger">Cancel</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="admin-card" style="padding:0;">
+    <div class="table-heading">Waitlist</div>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Destination</th>
+                <th>User</th>
+                <th>Rooms</th>
+                <th>Added</th>
+                <th style="width:140px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (waitlist != null)
+            {
+                foreach (var w in waitlist)
+                {
+                    <tr>
+                        <td>@w.Travel?.Destination</td>
+                        <td>@w.UserEmail</td>
+                        <td>@w.RequestedRooms</td>
+                        <td>@w.CreatedAt.ToLocalTime().ToString("dd MMM HH:mm")</td>
+                        <td>
+                            <form asp-action="Promote" method="post" asp-route-id="@w.Id">
+                                <button type="submit" class="pill primary">Promote</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

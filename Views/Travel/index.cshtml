@@ -11,10 +11,22 @@
 
 <div class="main">
     <div class="page-container">
-        
-        <h1 class="main-heading">Your Next Adventure Awaits</h1>
-        <p class="sub-heading">Discover hand-picked travel packages for every dream.</p>
-        
+        <section class="hero-card">
+            <div class="hero-text">
+                <p class="eyebrow">Curated escapes</p>
+                <h1>Your next adventure awaits</h1>
+                <p>Hand-picked packages with the Tasman aesthetic—bold color, smooth motion, luxe details, and easy booking.</p>
+                <div class="hero-actions">
+                    <a href="#packages" class="pill primary">Browse all trips</a>
+                    <a href="/Login" class="pill ghost">Sign in</a>
+                </div>
+            </div>
+            <div class="hero-badge">
+                <span class="price-tag">₪2,500+</span>
+                <p>starting at</p>
+            </div>
+        </section>
+
         <div class="Header">
 
             <div class="date-filter-container filter-group">
@@ -71,6 +83,23 @@
                     }
                     else { <option value="adventure">Adventure</option> }
 
+                    @if (ViewBag.PackageType == "city")
+                    {
+                        <option value="city" selected>City</option>
+                    }
+                    else { <option value="city">City</option> }
+
+                    @if (ViewBag.PackageType == "wellness")
+                    {
+                        <option value="wellness" selected>Wellness</option>
+                    }
+                    else { <option value="wellness">Wellness</option> }
+
+                    @if (ViewBag.PackageType == "heritage")
+                    {
+                        <option value="heritage" selected>Heritage</option>
+                    }
+                    else { <option value="heritage">Heritage</option> }
                 </select>
             </div>
 
@@ -110,15 +139,23 @@
                             min="0"
                             max="20000"
                             step="500"
-                            value="@(ViewBag.MaxPrice ?? 0)" />
+                            value="@(ViewBag.MaxPrice ?? 20000)" />
 
-                    <span id="range-value">₪@((int)(ViewBag.MaxPrice ?? 0))</span>
+                    <span id="range-value">₪@((int)(ViewBag.MaxPrice ?? 20000))</span>
+                </div>
+            </div>
+
+            <div class="filter-container filter-group">
+                <label for="discounted"><i class="fas fa-percentage"></i> Discounts</label>
+                <div class="toggle-wrap">
+                    <input type="checkbox" id="discounted" @(ViewBag.Discounted == true ? "checked" : "") />
+                    <span class="toggle-label">Show discounted only</span>
                 </div>
             </div>
 
         </div>
 
-        <p class="page-title recommended-title">🔥 Our Top Recommendations</p>
+        <p class="page-title recommended-title">Our Top Recommendations</p>
         <div class="swiper main-swiper">
             <div class="swiper-wrapper">
 
@@ -133,11 +170,17 @@
                         </div>
                         
                         <div class="card-content">
-                            @* 💡 NEW CODE: Display Destination Country and Package Title *@
                             <p class="travel-country">@t.Country</p> 
                             <p class="travel-title">@t.Destination</p> 
                             
-                            <p class="travel-price">₪@t.Price</p>
+                            @if (t.DiscountPrice.HasValue && t.DiscountEndsAt.HasValue && t.DiscountEndsAt.Value > DateTime.UtcNow)
+                            {
+                                <p class="travel-price"><span class="old-price">₪@t.Price</span> ₪@t.DiscountPrice</p>
+                            }
+                            else
+                            {
+                                <p class="travel-price">₪@t.Price</p>
+                            }
                             <div class="card-actions">
                                 <a href="/Travel/Details/@t.Id" class="book-now-btn">Book</a>
                                 <a href="#" class="buy-now-btn">Buy Now</a> </div>
@@ -150,7 +193,7 @@
             <div class="swiper-pagination"></div>
         </div>
 
-        <p class="page-title all-packages-title">All Available Packages</p>
+        <p class="page-title all-packages-title" id="packages">All Available Packages</p>
         <div class="travel-grid">
 
             @foreach (var t in Model)
@@ -166,7 +209,14 @@
                     <div class="card-content">
                         <p class="travel-country">@t.Country</p>
                         <p class="travel-title">@t.Destination</p>
-                        <p class="travel-price">₪@t.Price</p>
+                        @if (t.DiscountPrice.HasValue && t.DiscountEndsAt.HasValue && t.DiscountEndsAt.Value > DateTime.UtcNow)
+                        {
+                            <p class="travel-price"><span class="old-price">₪@t.Price</span> ₪@t.DiscountPrice</p>
+                        }
+                        else
+                        {
+                            <p class="travel-price">₪@t.Price</p>
+                        }
                         <div class="card-actions">
                             <a href="/Travel/Details/@t.Id" class="book-now-btn">Book</a>
                             <a href="#" class="buy-now-btn">Buy Now</a> </div>
@@ -194,32 +244,33 @@
     new Swiper(".main-swiper", {
         slidesPerView: 'auto',
         spaceBetween: 25, 
-        centeredSlides: false, // Keep false for regular scrolling (or set true if you want the "peek" effect)
+        centeredSlides: false,
         pagination: { el: ".swiper-pagination", clickable: true }
     });
 
-    // PRICE LABEL LIVE UPDATE (No functionality change)
+    // PRICE LABEL LIVE UPDATE
     document.getElementById("maxPrice").addEventListener("input", function () {
         document.getElementById("range-value").textContent = `₪${this.value}`;
     });
 
-    // FILTER APPLY (No functionality change)
+    // FILTER APPLY
     function applyFilters() {
         const search = document.getElementById("search").value;
         const packageType = document.getElementById("PackageType").value;
         const sort = document.getElementById("sort").value;
         const maxPrice = document.getElementById("maxPrice").value;
         const startDate = document.getElementById("startDate").value;
+        const discounted = document.getElementById("discounted").checked;
 
-        // Note: The logic here is still correct for applying filters to the entire page view
         window.location.href =
-            `/Travel?search=${search}&PackageType=${packageType}&sort=${sort}&maxPrice=${maxPrice}&startDate=${startDate}`;
+            `/Travel?search=${search}&PackageType=${packageType}&sort=${sort}&maxPrice=${maxPrice}&startDate=${startDate}&discounted=${discounted}`;
     }
 
     document.getElementById("PackageType").addEventListener("change", applyFilters);
     document.getElementById("sort").addEventListener("change", applyFilters);
     document.getElementById("maxPrice").addEventListener("change", applyFilters);
     document.getElementById("startDate").addEventListener("change", applyFilters);
+    document.getElementById("discounted").addEventListener("change", applyFilters);
 
     document.getElementById("search").addEventListener("keypress", e => {
         if (e.key === "Enter") applyFilters();

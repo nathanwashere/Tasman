@@ -3,6 +3,7 @@ using Tasman.Models;
 using Tasman.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Tasman.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace Tasman.Controllers
 {
@@ -42,7 +43,13 @@ namespace Tasman.Controllers
 
             if (result == PasswordVerificationResult.Success)
             {
+                HttpContext.Session.SetString("UserEmail", userFromDb.Email);
+                HttpContext.Session.SetString("IsAdmin", userFromDb.IsAdmin.ToString());
                 Console.WriteLine("Login successful");
+                if (userFromDb.IsAdmin)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
                 return RedirectToAction("Index", "Travel");
             }
 

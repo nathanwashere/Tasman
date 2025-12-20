@@ -13,6 +13,17 @@ namespace Tasman.Models
         public DateTime EndDate { get; set; }
 
         public int Price { get; set; }
+        public int? DiscountPrice { get; set; }
+        public DateTime? DiscountEndsAt { get; set; }
+
+        public bool IsVisible { get; set; } = true;
+        public bool IsRecommended { get; set; }
+        public int DisplayOrder { get; set; }
+
+        // Booking windows (days before start date)
+        public int BookableDaysBeforeStart { get; set; } = 1;
+        public int CancellableDaysBeforeStart { get; set; } = 1;
+
         public int AvailableRooms { get; set; }
 
         public string PackageType { get; set; } = string.Empty;  // family, honeymoon, etc.

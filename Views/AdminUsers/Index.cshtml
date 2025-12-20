@@ -1,0 +1,52 @@
+@model IEnumerable<Tasman.Models.User>
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    ViewData["Title"] = "Users";
+}
+
+<div class="admin-header">
+    <div>
+        <h1>User Database</h1>
+        <p>See everyone registered. Remove users or send reminder nudges.</p>
+    </div>
+    @if (TempData["Message"] != null)
+    {
+        <span class="pill" style="background:rgba(64,145,108,0.12);color:#40916c;">@TempData["Message"]</span>
+    }
+</div>
+
+<div class="admin-card" style="padding:0;">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th style="width:180px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.FirstName @user.LastName</td>
+                    <td>@user.Email</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@(user.IsAdmin ? "Admin" : "Traveler")</td>
+                    <td>
+                        <form asp-action="SendReminder" method="post" asp-route-email="@user.Email" style="display:inline;">
+                            <button type="submit" class="pill">Send reminder</button>
+                        </form>
+                        @if (!user.IsAdmin)
+                        {
+                            <form asp-action="Delete" method="post" asp-route-email="@user.Email" style="display:inline;" onsubmit="return confirm('Delete this user?');">
+                                <button type="submit" class="pill danger">Delete</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
