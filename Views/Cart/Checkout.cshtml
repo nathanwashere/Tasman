@@ -2,6 +2,8 @@
 @{
     Layout = "~/Views/Shared/TravelLayout.cshtml";
     var user = ViewBag.User as Tasman.Models.User;
+    var message = ViewBag.Message as string;
+    var addedToCart = ViewBag.AddedToCart as bool? ?? false;
 }
 
 <link rel="stylesheet" href="~/css/travel.css" />
@@ -13,6 +15,10 @@
                 <p class="eyebrow">Checkout</p>
                 <h1>Confirm your trip</h1>
                 <p>We'll use your contact info from your profile. Card data is not stored.</p>
+                @if (!string.IsNullOrEmpty(message))
+                {
+                    <div class="pill" style="background:rgba(64,145,108,0.12);color:#40916c;">@message</div>
+                }
             </div>
             <div class="hero-badge">
                 <span class="price-tag">$@Model.TotalPrice</span>
@@ -68,3 +74,18 @@
         </form>
     </div>
 </div>
+
+@if (addedToCart)
+{
+    <div id="addedToCartModal" style="position:fixed;inset:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;z-index:9999;">
+        <div style="background:white;padding:22px 24px;border-radius:14px;max-width:360px;width:92%;box-shadow:0 12px 30px rgba(0,0,0,0.18);text-align:center;">
+            <p class="eyebrow">Added to cart</p>
+            <h2 style="margin:6px 0 10px;">Booking saved</h2>
+            <p class="muted">Your booking is in the cart. You can review details or pay now.</p>
+            <div style="display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
+                <a class="book-now-btn" href="/Cart">Go to cart</a>
+                <button class="buy-now-btn" type="button" onclick="document.getElementById('addedToCartModal').remove();">Stay here</button>
+            </div>
+        </div>
+    </div>
+}

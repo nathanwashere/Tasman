@@ -43,6 +43,9 @@ namespace Tasman.Controllers
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             ViewBag.User = user;
+            ViewBag.Message = TempData["Message"] as string;
+            ViewBag.AddedToCart = TempData["AddedToCart"] != null;
+            TempData.Keep("Message");
             return View(booking);
         }
 

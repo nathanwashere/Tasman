@@ -167,7 +167,7 @@ namespace Tasman.Controllers
             var daysUntil = (travel.StartDate - DateTime.UtcNow).TotalDays;
             if (daysUntil < travel.BookableDaysBeforeStart)
             {
-                TempData["Message"] = "Booking window is closed for this trip.";
+                TempData["Message"] = $"This trip must be booked at least {travel.BookableDaysBeforeStart} days before departure.";
                 return RedirectToAction("Details", new { id = model.TravelId });
             }
 
@@ -199,7 +199,8 @@ namespace Tasman.Controllers
                 _context.Bookings.Add(booking);
                 await _context.SaveChangesAsync();
 
-                TempData["Message"] = "Booking confirmed. Proceed to checkout.";
+                TempData["Message"] = "Added to cart. Review and pay in checkout.";
+                TempData["AddedToCart"] = true;
                 return RedirectToAction("Checkout", "Cart", new { id = booking.Id });
             }
             else
