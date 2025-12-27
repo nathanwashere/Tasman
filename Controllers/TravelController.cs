@@ -149,6 +149,21 @@ namespace Tasman.Controllers
             if (travel == null)
                 return NotFound();
 
+            // Booking limit check
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                TempData["Message"] = "Please sign in to book a trip.";
+                return RedirectToAction("Index", "Login");
+            }
+
+            var activeCount = await _context.Bookings.CountAsync(b => b.UserEmail == userEmail && b.Status == "Booked");
+            if (activeCount >= 3)
+            {
+                TempData["Message"] = "You can only hold up to 3 active bookings at once.";
+                return RedirectToAction("Details", new { id = model.TravelId });
+            }
+
             var daysUntil = (travel.StartDate - DateTime.UtcNow).TotalDays;
             if (daysUntil < travel.BookableDaysBeforeStart)
             {
@@ -162,28 +177,30 @@ namespace Tasman.Controllers
                 return View(model);
             }
 
-            var userEmail = HttpContext.Session.GetString("UserEmail");
-            if (string.IsNullOrEmpty(userEmail))
-            {
-                TempData["Message"] = "Please sign in to book a trip.";
-                return RedirectToAction("Index", "Login");
-            }
-
             if (travel.AvailableRooms >= model.Rooms)
             {
+                var extraRooms = Math.Max(0, model.Rooms - 1);
+                var basePrice = travel.DiscountPrice.HasValue && travel.DiscountEndsAt.HasValue && travel.DiscountEndsAt.Value > DateTime.UtcNow
+                    ? travel.DiscountPrice.Value
+                    : travel.Price;
+                var total = basePrice + (extraRooms * 100);
+
                 var booking = new Booking
                 {
                     TravelId = model.TravelId,
                     UserEmail = userEmail,
                     Rooms = model.Rooms,
-                    CreatedAt = DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow,
+                    TotalPrice = total,
+                    Status = "Booked"
                 };
 
                 travel.AvailableRooms -= model.Rooms;
                 _context.Bookings.Add(booking);
                 await _context.SaveChangesAsync();
 
-                TempData["Message"] = "Booking confirmed. Check your dashboard for details.";
+                TempData["Message"] = "Booking confirmed. Proceed to checkout.";
+                return RedirectToAction("Checkout", "Cart", new { id = booking.Id });
             }
             else
             {

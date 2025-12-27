@@ -17,6 +17,7 @@
             <div class="nav-links">
                 <a href="/Travel">Destinations</a>
                 <a href="/Login">Sign in</a>
+                <a href="/Cart">Cart</a>
                 @{
                     var isAdmin = HttpContextAccessor.HttpContext?.Session.GetString("IsAdmin");
                     if (bool.TryParse(isAdmin, out var admin) && admin)

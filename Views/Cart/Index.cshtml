@@ -1,0 +1,61 @@
+@model IEnumerable<Tasman.Models.Booking>
+@{
+    Layout = "~/Views/Shared/TravelLayout.cshtml";
+    var message = TempData["Message"] as string;
+}
+
+<link rel="stylesheet" href="~/css/travel.css" />
+
+<div class="main">
+    <div class="page-container">
+        <section class="hero-card">
+            <div class="hero-text">
+                <p class="eyebrow">Your Cart</p>
+                <h1>Booked Trips</h1>
+                <p>Up to 3 active bookings. Extra rooms add $100 each. Cancel within the allowed window.</p>
+                @if (!string.IsNullOrEmpty(message))
+                {
+                    <div class="pill" style="background:rgba(64,145,108,0.12);color:#40916c;">@message</div>
+                }
+            </div>
+        </section>
+
+        <div class="travel-grid">
+            @foreach (var b in Model)
+            {
+                var travel = b.Travel;
+                if (travel == null) { continue; }
+                var daysLeft = (travel.StartDate - DateTime.UtcNow).TotalDays;
+                <div class="travel-card">
+                    <div class="travel-image-wrapper">
+                        <div class="travel-image" style="background-image:url('@travel.ImageUrl');height:200px;"></div>
+                        <span class="travel-PackageType">@travel.PackageType</span>
+                    </div>
+                    <div class="card-content">
+                        <p class="travel-country">@travel.Country</p>
+                        <p class="travel-title">@travel.Destination</p>
+                        <p class="travel-price">$@b.TotalPrice</p>
+                        <p class="muted">Rooms: @b.Rooms | Status: @b.Status | Departs in @Math.Max(0, (int)daysLeft) days</p>
+                        <div class="card-actions" style="gap:8px;display:flex;flex-wrap:wrap;">
+                            @if (b.Status != "Paid")
+                            {
+                                <a class="book-now-btn" href="/Cart/Checkout/@b.Id">Checkout</a>
+                            }
+                            else
+                            {
+                                <span class="pill" style="background:rgba(64,145,108,0.12);color:#40916c;">Paid</span>
+                            }
+                            <a class="buy-now-btn" href="/Cart/Receipt/@b.Id">Receipt (PDF)</a>
+                            @if (b.Status == "Booked")
+                            {
+                                <form asp-action="Cancel" method="post" asp-route-id="@b.Id" style="margin:0;">
+                                    <button type="submit" class="buy-now-btn" style="background:#d00000;">Cancel</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -20,5 +20,11 @@ namespace Tasman.Models
         public int Rooms { get; set; } = 1;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public string Status { get; set; } = "Booked"; // Booked, Cancelled
+
+        public DateTime? CancelledAt { get; set; }
+
+        public int TotalPrice { get; set; }
     }
 }
